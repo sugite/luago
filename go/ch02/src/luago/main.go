@@ -1,14 +1,18 @@
 package main
 
-import "fmt"
-import "io/ioutil"
-import "os"
-import "luago/binchunk"
+import (
+	"fmt"
+	"io/ioutil"
+	"luago/go/ch02/src/luago/binchunk"
+	"os"
+)
 
 func main() {
 	if len(os.Args) > 1 {
 		data, err := ioutil.ReadFile(os.Args[1])
-		if err != nil { panic(err) }
+		if err != nil {
+			panic(err)
+		}
 		proto := binchunk.Undump(data)
 		list(proto)
 	}
@@ -25,10 +29,14 @@ func list(f *binchunk.Prototype) {
 
 func printHeader(f *binchunk.Prototype) {
 	funcType := "main"
-	if f.LineDefined > 0 { funcType = "function" }
+	if f.LineDefined > 0 {
+		funcType = "function"
+	}
 
 	varargFlag := ""
-	if f.IsVararg > 0 { varargFlag = "+" }
+	if f.IsVararg > 0 {
+		varargFlag = "+"
+	}
 
 	fmt.Printf("\n%s <%s:%d, %d> (%d instructions)\n", funcType, f.Source, f.LineDefined, f.LastLineDefined, len(f.Code))
 	fmt.Printf("%d%s params, %d slots, %d upvalues, ", f.NumParams, varargFlag, f.MaxStackSize, len(f.Upvalues))
