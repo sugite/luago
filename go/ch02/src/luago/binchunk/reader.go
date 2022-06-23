@@ -10,7 +10,6 @@ type reader struct {
 }
 
 func (rdr *reader) readByte() byte {
-	println("will read a byte")
 	b := rdr.data[0]
 	rdr.data = rdr.data[1:]
 	return b
